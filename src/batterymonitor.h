@@ -64,7 +64,7 @@
     // Diagramm:
     //   (Battery)--- [BATTERY_SHIELD_RESISTANCE] ---(INPUT_BOARD)---  [BATTERY_SHIELD_R2] ---(ESP_INPUT)--- [BATTERY_SHIELD_R1] --- (GND)
     // SlimeVR Board can handle max 5V > so analogRead of 5.0V input will result in 1023.0
-  #define batteryADCMultiplier ADCVoltageMax / ADCResulution * (BATTERY_SHIELD_R1 + BATTERY_SHIELD_R2 + BATTERY_SHIELD_RESISTANCE) / BATTERY_SHIELD_R1
+  #define batteryADCMultiplier (BATTERY_SHIELD_R1 + BATTERY_SHIELD_R2 + BATTERY_SHIELD_RESISTANCE) / BATTERY_SHIELD_R1
 #elif BATTERY_MONITOR == BAT_MCP3021 || BATTERY_MONITOR == BAT_INTERNAL_MCP3021
   // Default recommended resistors are 9.1k and 5.1k
   #define batteryADCMultiplier 3.3 / 1023.0 * 14.2 / 9.1
