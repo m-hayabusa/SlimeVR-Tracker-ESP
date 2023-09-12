@@ -127,6 +127,9 @@ void BatteryMonitor::Loop()
                         #else
                             statusManager.setStatus(SlimeVR::Status::LOW_BATTERY, true);
                         #endif
+						#if defined(PIN_DCDC_EN)
+							digitalWrite(PIN_DCDC_EN, LOW);
+						#endif
                     } else {
                         statusManager.setStatus(SlimeVR::Status::LOW_BATTERY, false);
                     }

@@ -50,13 +50,24 @@ BatteryMonitor battery;
 
 void setup()
 {
+#ifdef PIN_DCDC_EN
+	pinMode(PIN_DCDC_EN, OUTPUT);
+	digitalWrite(PIN_DCDC_EN, HIGH);
+#endif
+
     Serial.begin(serialBaudRate);
     globalTimer = timer_create_default();
 
-#ifdef ESP32C3
-    // Wait for the Computer to be able to connect.
-    delay(2000);
-#endif
+    ledManager.setup();
+	for (int i = 0; i <= 10; i++){
+		ledManager.blink(i*20);
+		delay((10-i)*20+1);
+	}
+
+// #ifdef ESP32C3
+//     // Wait for the Computer to be able to connect.
+//     delay(2000);
+// #endif
 
     Serial.println();
     Serial.println();
@@ -66,7 +77,6 @@ void setup()
 
     statusManager.setStatus(SlimeVR::Status::LOADING, true);
 
-    ledManager.setup();
     configuration.setup();
 
     SerialCommands::setUp();
@@ -107,10 +117,27 @@ void setup()
     sensorManager.postSetup();
 
     loopTime = micros();
+	pinMode(PIN_SWITCH, INPUT_PULLDOWN);
 }
 
 void loop()
 {
+	{
+		static unsigned long last_ms = 0;
+		if (digitalRead(PIN_SWITCH)) {
+			if (last_ms == 0){
+				last_ms = millis();
+			} else if (last_ms + 1000 < millis()) {
+				for (int i = 10; i > 0; i--){
+					ledManager.blink(i*20);
+					delay((10-i)*20+1);
+				}
+				digitalWrite(PIN_DCDC_EN, LOW);
+			}
+		} else {
+			last_ms = 0;
+		}
+	}
     globalTimer.tick();
     SerialCommands::update();
     OTA::otaUpdate();
