@@ -26,9 +26,9 @@
 // ================================================
 
 // Set parameters of IMU and board used
-#define IMU IMU_BNO085
+#define IMU IMU_BMI160
 #define SECOND_IMU IMU
-#define BOARD BOARD_SLIMEVR
+#define BOARD BOARD_NS_C3
 #define IMU_ROTATION DEG_270
 #define SECOND_IMU_ROTATION DEG_270
 
@@ -50,8 +50,8 @@ IMU_DESC_ENTRY(IMU_BMP160, PRIMARY_IMU_ADDRESS_ONE, IMU_ROTATION, PIN_IMU_SCL, P
 #endif
 
 // Battery monitoring options (comment to disable):
-//   BAT_EXTERNAL for ADC pin, 
-//   BAT_INTERNAL for internal - can detect only low battery, 
+//   BAT_EXTERNAL for ADC pin,
+//   BAT_INTERNAL for internal - can detect only low battery,
 //   BAT_MCP3021 for external ADC connected over I2C
 #define BATTERY_MONITOR BAT_EXTERNAL
 
@@ -72,12 +72,26 @@ IMU_DESC_ENTRY(IMU_BMP160, PRIMARY_IMU_ADDRESS_ONE, IMU_ROTATION, PIN_IMU_SCL, P
 //   LED_PIN
 //     - Number or Symbol (D1,..) of the Output
 //     - To turn off the LED, set LED_PIN to LED_OFF
-//   LED_INVERTED 
+//   LED_INVERTED
 //     - false for output 3.3V on high
 //     - true for pull down to GND on high
 
 // Board-specific configurations
-#if BOARD == BOARD_SLIMEVR
+#if BOARD == BOARD_NS_C3
+  #define PIN_IMU_SDA 8
+  #define PIN_IMU_SCL 9
+  #define PIN_IMU_INT 3
+  #define PIN_IMU_INT_2 255
+  #define PIN_BATTERY_LEVEL 4
+  #define PIN_DCDC_EN 5
+  #define PIN_SWITCH 7
+  #define LED_PIN 6
+  #define LED_INVERTED true
+
+  #define BATTERY_SHIELD_RESISTANCE 0
+  #define BATTERY_SHIELD_R1 1
+  #define BATTERY_SHIELD_R2 0
+#elif BOARD == BOARD_SLIMEVR
   #define PIN_IMU_SDA 14
   #define PIN_IMU_SCL 12
   #define PIN_IMU_INT 16
@@ -88,7 +102,7 @@ IMU_DESC_ENTRY(IMU_BMP160, PRIMARY_IMU_ADDRESS_ONE, IMU_ROTATION, PIN_IMU_SCL, P
   #ifndef BATTERY_SHIELD_RESISTANCE
     #define BATTERY_SHIELD_RESISTANCE 0
   #endif
-  #ifndef BATTERY_SHIELD_R1 
+  #ifndef BATTERY_SHIELD_R1
     #define BATTERY_SHIELD_R1 10
   #endif
   #ifndef BATTERY_SHIELD_R2
@@ -105,7 +119,7 @@ IMU_DESC_ENTRY(IMU_BMP160, PRIMARY_IMU_ADDRESS_ONE, IMU_ROTATION, PIN_IMU_SCL, P
   #ifndef BATTERY_SHIELD_RESISTANCE
     #define BATTERY_SHIELD_RESISTANCE 0
   #endif
-  #ifndef BATTERY_SHIELD_R1 
+  #ifndef BATTERY_SHIELD_R1
     #define BATTERY_SHIELD_R1 10
   #endif
   #ifndef BATTERY_SHIELD_R2
@@ -122,7 +136,7 @@ IMU_DESC_ENTRY(IMU_BMP160, PRIMARY_IMU_ADDRESS_ONE, IMU_ROTATION, PIN_IMU_SCL, P
   #ifndef BATTERY_SHIELD_RESISTANCE
     #define BATTERY_SHIELD_RESISTANCE 180
   #endif
-  #ifndef BATTERY_SHIELD_R1 
+  #ifndef BATTERY_SHIELD_R1
     #define BATTERY_SHIELD_R1 100
   #endif
   #ifndef BATTERY_SHIELD_R2

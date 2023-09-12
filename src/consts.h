@@ -53,6 +53,7 @@
 #define BOARD_WRANGLER 14 // Only used by wrangler app
 #define BOARD_MOCOPI 15 // Used by mocopi/moslime
 #define BOARD_DEV_RESERVED 250 // Reserved, should not be used in any release firmware
+#define BOARD_NS_C3 150
 
 #define BAT_EXTERNAL 1
 #define BAT_INTERNAL 2
